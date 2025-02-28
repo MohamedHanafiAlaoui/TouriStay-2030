@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TouriStay 2030 - Votre hébergement du futur au Maroc</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Ajout de styles personnalisés pour le thème marocain */
+        .moroccan-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30L30 0l30 30-30 30L0 30zm15-15l15-15h-15l-15 15h15zm0 30l15 15v-15l-15-15v15zm30 0l-15 15h15l15-15h-15zm0-30l-15-15v15l15 15V15z' fill='%23C8A675' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .moroccan-arch {
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        }
+
+        .font-moroccan {
+            font-family: 'Georgia', serif;
+        }
+    </style>
+</head>
+<body class="bg-red-50 min-h-screen flex flex-col items-center justify-center">
+    <!-- Formulaire -->
+    <form class="max-w-lg w-full mx-4 bg-gradient-to-r from-red-50 to-red-100 p-8 rounded-xl shadow-2xl border border-red-200">
+        <h2 class="text-2xl font-bold text-red-800 text-center mb-8 font-moroccan">Ajouter un hébergement</h2>
+
+        <!-- Nom -->
+        <div class="mb-6">
+            <label for="name" class="block text-sm font-medium text-red-800">Nom de l'hébergement</label>
+            <input type="text" id="name" name="name" placeholder="Entrez le nom de l'hébergement" class="mt-1 block w-full px-4 py-3 border border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-200 placeholder-red-400">
+        </div>
+
+        <!-- Prix -->
+        <div class="mb-6">
+            <label for="prix" class="block text-sm font-medium text-red-800">Prix par nuit (€)</label>
+            <input type="number" id="prix" name="prix" placeholder="Entrez le prix par nuit" class="mt-1 block w-full px-4 py-3 border border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-200 placeholder-red-400">
+        </div>
+
+
+
+        <!-- Disponibilités -->
+        <div class="mb-6">
+            <label for="disponibilites" class="block text-sm font-medium text-red-800">Disponibilités</label>
+            <input type="text" id="disponibilites" name="disponibilites" placeholder="Entrez les disponibilités" class="mt-1 block w-full px-4 py-3 border border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-200 placeholder-red-400">
+        </div>
+
+        <!-- Localisation -->
+        <div class="mb-6">
+            <label for="localisation" class="block text-sm font-medium text-red-800">Localisation</label>
+            <input type="text" id="localisation" name="localisation" placeholder="Entrez la localisation" class="mt-1 block w-full px-4 py-3 border border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-200 placeholder-red-400">
+        </div>
+
+        <!-- Bouton de soumission -->
+        <div class="text-center">
+            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-medium transition duration-200 transform hover:scale-105 shadow-lg">Enregistrer</button>
+        </div>
+    </form>
+</body>
+</html>

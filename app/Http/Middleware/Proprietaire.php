@@ -16,9 +16,9 @@ class Proprietaire
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->usertype != 'proprietaire')
+        if(Auth::user()->role_id != 2)
         {
-            return redirect('dashboard');
+            return redirect('404');
         }
         return $next($request);
     }
