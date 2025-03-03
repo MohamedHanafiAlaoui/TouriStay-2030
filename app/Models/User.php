@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function favoris()
+    {
+        return $this->belongsToMany(Annonce::class, 'favorite_annonces')->withTimestamps();
+    }
+
 }

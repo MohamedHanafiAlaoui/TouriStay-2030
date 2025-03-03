@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Annonce;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -83,13 +84,21 @@ class TouristeController extends Controller
     public function dashboard()
     {
 
-        return view('touriste.dashboard');
+        $touriste = Auth::user();
+        return view('touriste.dashboard', compact('touriste'));
+    }
+    public function updateProfile(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . Auth::id(),
+        ]);
+
+        $touriste = Auth::user();
+        User::where('id', Auth::id())->update($validated);
+
+        return redirect()->route('touriste.dashboard')->with('success', 'Votre profil a été mis à jour avec succès.');
     }
 
-    public function test()
-    {
-        echo "hello";
-        // return view('touriste.dashboard');
-    }
 
 }

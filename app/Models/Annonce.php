@@ -27,4 +27,10 @@ class Annonce extends Model
     {
         return $this->belongsTo(User::class, 'id_Touriste');
     }
+    public function favoritedByUsers()
+{
+    return $this->belongsToMany(User::class, 'favorite_annonces')->withTimestamps();
 }
+
+}
+

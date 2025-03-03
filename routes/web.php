@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FavoriController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProprietaireController;
@@ -11,9 +12,9 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::get('/dashboard', function () {
-    return view('404');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('404');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -25,9 +26,6 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::get('/test', function(){
-    return dd("hello");
-});
 
 require __DIR__.'/auth.php';
 
@@ -45,10 +43,8 @@ Route::middleware(['auth', 'proprietaire'])->prefix('proprietaire')->name('propr
     Route::get('/annonces/{annonce}/edit', [ProprietaireController::class, 'editAnnonce'])->name('annonces.edit');
     Route::put('/annonces/{annonce}', [ProprietaireController::class, 'updateAnnonce'])->name('annonces.update');
 
-    // Route pour afficher le profil
     Route::get('/profile', [ProprietaireController::class, 'showProfile'])->name('profile.show');
 
-    // Route pour afficher le formulaire de mise à jour du profil
     Route::get('/profile/edit', [ProprietaireController::class, 'editProfile'])->name('profile.edit');
 
     // Route pour mettre à jour le profil
@@ -60,11 +56,15 @@ Route::middleware(['auth', 'touriste'])->prefix('touriste')->name('touriste.')->
     Route::get('/', [TouristeController::class, 'index'])->name('index');
 
     Route::get('/dashboard', [TouristeController::class, 'dashboard'])->name('dashboard');
+    Route::put('/dashboard/update', [TouristeController::class, 'updateProfile'])->name('dashboard.update');
 
     Route::get('/annonces', [TouristeController::class, 'indexAnnonces'])->name('annonces.index');
     Route::get('/annonces/{annonce}', [TouristeController::class, 'showAnnonce'])->name('annonces.show');
 
-    // Route::post('/annonces/{annonce}/buy', [TouristeController::class, 'buyAnnonce'])->name('annonces.buy');
+    // Route for buying an annonce
     Route::post('/annonces/{annonce}/buy', [TouristeController::class, 'buyAnnonce'])->name('annonces.buy');
 
+    // Add the favorite toggle route here
+    Route::post('/annonces/{annonce}/favorite', [FavoriController::class, 'toggleFavorite'])->name('annonces.favorite.toggle');
 });
+

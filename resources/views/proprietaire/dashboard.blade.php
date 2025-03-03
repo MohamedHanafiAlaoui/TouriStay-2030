@@ -12,43 +12,56 @@
     <!-- Navbar -->
     <nav class="bg-red-600 p-4 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center">
-                <!-- Dashboard Link -->
-                <a href="{{ route('proprietaire.dashboard') }}" class="text-white text-xl font-semibold">
-                    🏠 Tableau de bord
+            <!-- رابط لوحة التحكم -->
+            <a href="{{ route('proprietaire.dashboard') }}" class="text-white text-xl font-semibold">
+                🏠 Tableau de bord
+            </a>
+
+            <!-- روابط التنقل -->
+            <div class="flex space-x-6">
+                <a href="{{ route('proprietaire.profile.show') }}" class="text-white hover:text-gray-200">
+                    📌 Mon Profil
+                </a>
+                <a href="{{ route('proprietaire.annonces.create') }}" class="text-white hover:text-gray-200">
+                    ➕ Ajouter Annonce
                 </a>
             </div>
 
-            <div class="flex items-center space-x-6">
-                <!-- Profile and User Info -->
-                <div class="flex items-center text-white space-x-2">
-                    <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(Auth::user()->email))) . '?s=40' }}" alt="User Avatar" class="w-8 h-8 rounded-full">
+            <!-- قائمة الملف الشخصي -->
+            <div class="relative">
+                <button id="dropdownBtn" class="flex items-center text-white space-x-2 focus:outline-none">
+                    <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(Auth::user()->email))) . '?s=40' }}"
+                         alt="User Avatar" class="w-8 h-8 rounded-full">
                     <span class="font-medium">{{ Auth::user()->name }}</span>
-                </div>
+                    <i class="fas fa-caret-down"></i>
+                </button>
 
-                <!-- Dropdown for Profile and Logout -->
-                <div class="relative">
-                    <button class="text-white hover:text-gray-200 focus:outline-none">
-                        <i class="fas fa-caret-down"></i>
-                    </button>
-
-                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 hidden">
-                        <div class="py-2 px-4">
-                            <!-- Profile Link -->
-                            <a href="{{ route('profile.edit') }}" class="block text-gray-700 hover:text-blue-500">📝 Profile</a>
-                        </div>
-                        <div class="py-2 px-4 border-t">
-                            <!-- Logout Link -->
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="block w-full text-left text-red-600 hover:text-red-700">🚪 Log Out</button>
-                            </form>
-                        </div>
-                    </div>
+                <!-- القائمة المنسدلة -->
+                <div id="dropdownMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 hidden">
+                    <a href="{{ route('proprietaire.profile.show') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        📝 Profil
+                    </a>
+                    <a href="{{ route('proprietaire.profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        ✏️ Modifier Profil
+                    </a>
+                    <form method="POST" action="{{ route('logout') }}" class="border-t">
+                        @csrf
+                        <button type="submit" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
+                            🚪 Déconnexion
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </nav>
+
+
+    <script>
+        document.getElementById('dropdownBtn').addEventListener('click', function () {
+            document.getElementById('dropdownMenu').classList.toggle('hidden');
+        });
+    </script>
+
 
     <!-- Main Container -->
     <div class="container mx-auto px-6 py-8">
