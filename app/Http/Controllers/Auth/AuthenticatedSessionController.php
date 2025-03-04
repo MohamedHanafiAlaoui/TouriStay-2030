@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         if ($request->user()->role_id === 3) {
-            return redirect()->intended(route('dashboard'));
+            return redirect()->route('touriste.dashboard');
 
         }
         return redirect('/');

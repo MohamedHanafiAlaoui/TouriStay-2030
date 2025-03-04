@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FavoriController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
@@ -12,9 +13,7 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('404');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [HomeController::class, 'redirectUser'])->middleware('auth')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -30,11 +29,12 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
 
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
 });
+
 
 Route::middleware(['auth', 'proprietaire'])->prefix('proprietaire')->name('proprietaire.')->group(function () {
     Route::get('/dashboard', [ProprietaireController::class, 'index'])->name('dashboard');
