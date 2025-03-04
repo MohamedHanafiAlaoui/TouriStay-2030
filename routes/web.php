@@ -47,7 +47,6 @@ Route::middleware(['auth', 'proprietaire'])->prefix('proprietaire')->name('propr
 
     Route::get('/profile/edit', [ProprietaireController::class, 'editProfile'])->name('profile.edit');
 
-    // Route pour mettre à jour le profil
     Route::put('/profile', [ProprietaireController::class, 'updateProfile'])->name('profile.update');
 });
 
@@ -61,10 +60,8 @@ Route::middleware(['auth', 'touriste'])->prefix('touriste')->name('touriste.')->
     Route::get('/annonces', [TouristeController::class, 'indexAnnonces'])->name('annonces.index');
     Route::get('/annonces/{annonce}', [TouristeController::class, 'showAnnonce'])->name('annonces.show');
 
-    // Route for buying an annonce
     Route::post('/annonces/{annonce}/buy', [TouristeController::class, 'buyAnnonce'])->name('annonces.buy');
 
-    // Add the favorite toggle route here
     Route::post('/annonces/{annonce}/favorite', [FavoriController::class, 'toggleFavorite'])->name('annonces.favorite.toggle');
 });
 
