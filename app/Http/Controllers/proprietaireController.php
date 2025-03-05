@@ -28,11 +28,19 @@ class ProprietaireController extends Controller
             'prix' => 'required|numeric',
             'localisation' => 'required|string|max:255',
             'disponibilites' => 'required|boolean',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $validated['id_Propriétaire'] = Auth::id();
 
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public'); 
+            $validated['image'] = $imagePath;
+        }
+
         Annonce::create($validated);
+
+
 
         return redirect()->route('proprietaire.dashboard')->with('success', 'Annonce ajoutée avec succès 🚀');
     }

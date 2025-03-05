@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de bord - Propriétaire</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- For FontAwesome Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Pour les icônes FontAwesome -->
 </head>
 <body class="bg-gray-100 font-sans">
 
     <!-- Navbar -->
     <nav class="bg-red-600 p-4 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
-            <!-- رابط لوحة التحكم -->
+            <!-- Lien vers le tableau de bord -->
             <a href="{{ route('proprietaire.dashboard') }}" class="text-white text-xl font-semibold">
                 🏠 Tableau de bord
             </a>
 
-            <!-- روابط التنقل -->
+            <!-- Liens de navigation -->
             <div class="flex space-x-6">
                 <a href="{{ route('proprietaire.profile.show') }}" class="text-white hover:text-gray-200">
                     📌 Mon Profil
@@ -27,7 +27,7 @@
                 </a>
             </div>
 
-            <!-- قائمة الملف الشخصي -->
+            <!-- Menu déroulant du profil -->
             <div class="relative">
                 <button id="dropdownBtn" class="flex items-center text-white space-x-2 focus:outline-none">
                     <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(Auth::user()->email))) . '?s=40' }}"
@@ -36,13 +36,13 @@
                     <i class="fas fa-caret-down"></i>
                 </button>
 
-                <!-- القائمة المنسدلة -->
+                <!-- Menu déroulant -->
                 <div id="dropdownMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 hidden">
                     <a href="{{ route('proprietaire.profile.show') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                        📝 Profil
+                        👤 Afficher le profil
                     </a>
                     <a href="{{ route('proprietaire.profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                        ✏️ Modifier Profil
+                        ✏️ Modifier le profil
                     </a>
                     <form method="POST" action="{{ route('logout') }}" class="border-t">
                         @csrf
@@ -54,14 +54,6 @@
             </div>
         </div>
     </nav>
-
-
-    <script>
-        document.getElementById('dropdownBtn').addEventListener('click', function () {
-            document.getElementById('dropdownMenu').classList.toggle('hidden');
-        });
-    </script>
-
 
     <!-- Main Container -->
     <div class="container mx-auto px-6 py-8">
@@ -123,7 +115,7 @@
                                         <i class="fas fa-edit mr-2"></i> Modifier
                                     </a>
                                     <!-- Delete Button -->
-                                    <form action="" method="POST" onsubmit="return confirm('Êtes-vous sûr ?');">
+                                    <form action="{{ route('proprietaire.annonces.destroy', $annonce->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr ?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
@@ -140,13 +132,20 @@
         </div>
     </div>
 
-    <!-- Script for Dropdown -->
+    <!-- Script pour le menu déroulant -->
     <script>
-        const dropdownButton = document.querySelector('nav .relative button');
-        const dropdownMenu = document.querySelector('nav .relative .absolute');
+        const dropdownButton = document.getElementById('dropdownBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
 
         dropdownButton.addEventListener('click', () => {
             dropdownMenu.classList.toggle('hidden');
+        });
+
+        // Fermer le menu déroulant si on clique en dehors
+        window.addEventListener('click', (event) => {
+            if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
         });
     </script>
 

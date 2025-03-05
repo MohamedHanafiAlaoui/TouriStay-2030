@@ -14,6 +14,7 @@ class Annonce extends Model
         'id_Touriste',
         'disponibilites',
         'localisation',
+        'image',
     ];
 
 
@@ -31,6 +32,11 @@ class Annonce extends Model
 {
     return $this->belongsToMany(User::class, 'favorite_annonces')->withTimestamps();
 }
+public function reservations()
+{
+    return $this->hasMany(Reservation::class);
+}
+
 
 }
 

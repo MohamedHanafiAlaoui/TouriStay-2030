@@ -19,10 +19,55 @@
     <!-- En-tête -->
     <header class="bg-white shadow-md">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="#" class="text-red-800 font-bold text-2xl">TouriStay Maroc</a>
-            <button class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-lg">
-                Déconnexion
+            <div class="flex items-center">
+                <a href="{{ route('touriste.index') }}" class="text-red-800 font-bold text-2xl font-moroccan">TouriStay Maroc</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-4">
+                @auth
+                    <!-- Si l'utilisateur est connecté -->
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 focus:outline-none">
+                            <img src="{{ Auth::user()->avatar_url }}" alt="User Avatar" class="w-8 h-8 rounded-full">
+                            <span class="text-red-800">{{ Auth::user()->name }}</span>
+                            <svg class="w-4 h-4 text-red-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <!-- Menu déroulant -->
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden group-hover:block">
+                            <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-red-800 hover:bg-red-50">Profil</a>
+                            {{-- <a href="{{ route('reservations.index') }}" class="block px-4 py-2 text-red-800 hover:bg-red-50">Mes réservations</a> --}}
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="block w-full text-left px-4 py-2 text-red-800 hover:bg-red-50">Déconnexion</button>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <!-- Si l'utilisateur n'est pas connecté -->
+                    <a href="{{ route('login') }}" class="text-red-800 hover:text-red-600">Connexion</a>
+                    <a href="{{ route('register') }}" class="bg-red-800 hover:bg-red-900 text-red-100 px-4 py-2 rounded-lg">Inscription</a>
+                @endauth
+            </div>
+            <button class="md:hidden" id="mobile-menu-button">
+                <svg class="w-6 h-6 text-red-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
             </button>
+        </div>
+        <div class="hidden bg-white w-full py-2 px-4 md:hidden" id="mobile-menu">
+            @auth
+                <!-- Menu mobile pour utilisateur connecté -->
+                <a href="{{ route('dashboard') }}" class="block py-2 text-red-800 hover:text-red-600">Profil</a>
+                <a href="{{ route('touriste.annonces.index') }}" class="block py-2 text-red-800 hover:text-red-600">Mes réservations</a>                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="block w-full text-left py-2 text-red-800 hover:text-red-600">Déconnexion</button>
+                </form>
+            @else
+                <!-- Menu mobile pour utilisateur non connecté -->
+                <a href="{{ route('login') }}" class="block py-2 text-red-800 hover:text-red-600">Connexion</a>
+                <a href="{{ route('register') }}" class="block py-2 text-red-800 hover:text-red-600">Inscription</a>
+            @endauth
         </div>
     </header>
 
@@ -82,6 +127,10 @@
         document.getElementById('editPicBtn').addEventListener('click', function() {
             document.getElementById('profilePicInput').click();
         });
+            document.getElementById('mobile-menu-button').addEventListener('click', function() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenu.classList.toggle('hidden');
+    });
     </script>
 
 </body>
