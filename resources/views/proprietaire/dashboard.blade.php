@@ -115,14 +115,14 @@
                                         <i class="fas fa-edit mr-2"></i> Modifier
                                     </a>
                                     <!-- Delete Button -->
-                                    <form action="{{ route('proprietaire.annonces.destroy', $annonce->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr ?');">
+                                    {{-- <form action="{{ route('proprietaire.annonces.destroy', $annonce->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr ?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
                                                 class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg flex items-center transition duration-300">
                                             <i class="fas fa-trash-alt mr-2"></i> Supprimer
                                         </button>
-                                    </form>
+                                    </form> --}}
                                 </td>
                             </tr>
                         @endforeach

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FavoriController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProprietaireController;
 use App\Http\Controllers\TouristeController;
 use Illuminate\Support\Facades\Route;
@@ -63,5 +64,8 @@ Route::middleware(['auth', 'touriste'])->prefix('touriste')->name('touriste.')->
     Route::post('/annonces/{annonce}/buy', [TouristeController::class, 'buyAnnonce'])->name('annonces.buy');
 
     Route::post('/annonces/{annonce}/favorite', [FavoriController::class, 'toggleFavorite'])->name('annonces.favorite.toggle');
-});
 
+    Route::post('/payment/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
+
+    Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
+});

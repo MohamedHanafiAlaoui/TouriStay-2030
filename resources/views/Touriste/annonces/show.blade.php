@@ -202,8 +202,10 @@
     <div id="reservationModal" class="modal">
         <div class="modal-content">
             <h3 class="text-xl font-bold text-gray-800 mb-4">Réserver cette annonce</h3>
-            <form id="reservationForm" action="" method="POST">
+            <form id="reservationForm" action="{{ route('touriste.payment.checkout') }}" method="POST">
                 @csrf
+                <input type="hidden" name="annonce_id" value="{{ $annonce->id }}">
+
                 <div class="mb-4">
                     <label for="startDate" class="block text-sm font-medium text-gray-700">Date de début</label>
                     <input type="date" id="startDate" name="startDate" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
@@ -326,4 +328,4 @@
     </script>
 </body>
 </html>
-²
+
